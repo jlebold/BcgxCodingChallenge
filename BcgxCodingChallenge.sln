@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BcgxCodingChallenge", "BcgxCodingChallenge\BcgxCodingChallenge.csproj", "{DF4067AF-DCEE-4FE2-BF96-852928C4D79E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BcgxCodingChallenge.Test", "BcgxCodingChallenge.Test\BcgxCodingChallenge.Test.csproj", "{8C266CA9-EAC1-4DE7-9E37-56647734E087}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF4067AF-DCEE-4FE2-BF96-852928C4D79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4067AF-DCEE-4FE2-BF96-852928C4D79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4067AF-DCEE-4FE2-BF96-852928C4D79E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4067AF-DCEE-4FE2-BF96-852928C4D79E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C266CA9-EAC1-4DE7-9E37-56647734E087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C266CA9-EAC1-4DE7-9E37-56647734E087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C266CA9-EAC1-4DE7-9E37-56647734E087}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C266CA9-EAC1-4DE7-9E37-56647734E087}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32E2E23B-03EB-475B-994F-FE2249E74B6B}
+	EndGlobalSection
+EndGlobal
