@@ -5,33 +5,59 @@ namespace BcgxCodingChallenge.Services;
 public class ShoppingService : IShoppingService
 {
     private readonly IWatchRepository _watchRepository;
+    private readonly ILogger<ShoppingService> _logger;
 
-    public ShoppingService(IWatchRepository watchRepository) 
+    public ShoppingService(IWatchRepository watchRepository, ILogger<ShoppingService> logger) 
     {
         _watchRepository = watchRepository;
+        _logger = logger;
     }
 
-    public string? CalculateCost(IEnumerable<string> watchCodes)
+    public async Task<string?> CalculateCost(IEnumerable<string> watchCodes)
     {
         if (IsValidInput(watchCodes) == false)
         {
             return null;
         }
 
-        var watches = _watchRepository.GetWatchesByCodes(watchCodes);
+        var watchModelsInCart = (await _watchRepository.GetAllAsync()).Where(x => watchCodes.Contains(x.Code));
+        var totalCost = 0;
 
-        CalculateDiscounts(watchCodes);
-        return null;
+        foreach (var modelOfWatch in watchModelsInCart)
+        {
+            if (modelOfWatch.DiscountPrice != null && modelOfWatch.DiscountUnits != null)
+            {
+                var countOfWatchModel = watchCodes.Count(x => x.Equals(modelOfWatch.Code));
+                var numberOfFullPriceWatches = countOfWatchModel % modelOfWatch.DiscountUnits.Value;
+                var costOfFullPriceWatches = numberOfFullPriceWatches * modelOfWatch.Price;
+                var costOfDiscountedWatches = ((countOfWatchModel - numberOfFullPriceWatches) / modelOfWatch.DiscountUnits.Value) * modelOfWatch.DiscountPrice.Value;
+                totalCost += costOfFullPriceWatches + costOfDiscountedWatches;
+            }
+            else
+            {
+                totalCost += watchCodes.Count(x => x.Equals(modelOfWatch.Code)) * modelOfWatch.Price;
+            }
+        }
 
+        return $"{{ \"price\": {totalCost} }}";
     }
 
-    private bool IsValidInput(IEnumerable<string> watchIds)
+    private bool IsValidInput(IEnumerable<string> watchCodes)
     {
-        throw new NotImplementedException();
-    }
+        foreach (var watchCode in watchCodes) 
+        {
+            if (watchCode.All(char.IsDigit) == false)
+            {
+                _logger.LogError($"Invalid user input, non-numeric character detected: {watchCode}");
+                return false;
+            }
+            else if (watchCode.Length != 3)
+            {
+                _logger.LogError($"Invalid user input, each code must be three digits: {watchCode}");
+                return false;
+            }
+        }
 
-    private int CalculateDiscounts(IEnumerable<string> watchIds) 
-    {
-        throw new NotImplementedException();
+        return true;
     }
 }

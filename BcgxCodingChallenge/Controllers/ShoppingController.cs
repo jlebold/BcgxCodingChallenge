@@ -16,9 +16,9 @@ public class ShoppingController : ControllerBase
     }
 
     [HttpPost("checkout")]
-    public IActionResult Checkout(IEnumerable<string> watchIds)
+    public async Task<IActionResult> Checkout(IEnumerable<string> watchIds)
     {
-        var result = _checkoutService.CalculateCost(watchIds);
+        var result = await _checkoutService.CalculateCost(watchIds);
 
         return result != null ? 
             Ok(result) :

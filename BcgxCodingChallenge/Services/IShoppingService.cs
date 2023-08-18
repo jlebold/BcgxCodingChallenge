@@ -4,5 +4,5 @@ namespace BcgxCodingChallenge.Services;
 
 public interface IShoppingService
 {
-    string? CalculateCost(IEnumerable<string> watchIds);
+    Task<string?> CalculateCost(IEnumerable<string> watchIds);
 }

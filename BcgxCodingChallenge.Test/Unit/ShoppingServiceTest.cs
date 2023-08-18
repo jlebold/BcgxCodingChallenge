@@ -44,63 +44,63 @@ public class ShoppingServiceTest
             }
         };
 
-        _watchRepository.Setup(x => x.GetAll()).Returns(exampleWatchDtos);
+        _watchRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(exampleWatchDtos);
         _shoppingService = new ShoppingService(_watchRepository.Object, logger.Object);
     }
 
     [Fact]
-    public void HappyPath_NoDiscounts()
+    public async Task HappyPath_NoDiscounts()
     {
         // Arrange
         var input = new List<string>() { "001", "002", "001", "003", "004" };
 
         // Act
-        var result = _shoppingService.CalculateCost(input);
+        var result = await _shoppingService.CalculateCost(input);
 
         // Assert
-        _watchRepository.Verify(x => x.GetAll(), Times.Once());
+        _watchRepository.Verify(x => x.GetAllAsync(), Times.Once());
         Assert.True(result == "{ \"price\": 360 }");
     }
 
     [Fact]
-    public void HappyPath_WithDiscounts()
+    public async Task HappyPath_WithDiscounts()
     {
         // Arrange
         var input = new List<string>() { "001", "002", "001", "001", "003", "004", "002" };
 
         // Act
-        var result = _shoppingService.CalculateCost(input);
+        var result = await _shoppingService.CalculateCost(input);
 
         // Assert
-        _watchRepository.Verify(x => x.GetAll(), Times.Once());
+        _watchRepository.Verify(x => x.GetAllAsync(), Times.Once());
         Assert.True(result == "{ \"price\": 400 }");
     }
 
     [Fact]
-    public void EmptyInput_ReturnsZero()
+    public async Task EmptyInput_ReturnsZero()
     {
         // Arrange
         var input = new List<string>() { };
 
         // Act
-        var result = _shoppingService.CalculateCost(input);
+        var result = await _shoppingService.CalculateCost(input);
 
         // Assert
-        _watchRepository.Verify(x => x.GetAll(), Times.Once());
+        _watchRepository.Verify(x => x.GetAllAsync(), Times.Once());
         Assert.True(result == "{ \"price\": 0 }");
     }
 
     [Fact]
-    public void InvalidInput_ReturnsNull()
+    public async Task InvalidInput_ReturnsNull()
     {
         // Arrange
         var input = new List<string>() { "001", "0001", "002" };
 
         // Act
-        var result = _shoppingService.CalculateCost(input);
+        var result = await _shoppingService.CalculateCost(input);
 
         // Assert
-        _watchRepository.Verify(x => x.GetAll(), Times.Never());
+        _watchRepository.Verify(x => x.GetAllAsync(), Times.Never());
         Assert.True(result == null);
     }
 }
