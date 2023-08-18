@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BcgxCodingChallenge.Controllers;
 [ApiController]
-[Route("[controller]")]
 public class ShoppingController : ControllerBase
 {
     private readonly ILogger<ShoppingController> _logger;

@@ -22,7 +22,7 @@ public class ShoppingControllerTest : IClassFixture<WebApplicationFactory<Progra
         {
             Method = HttpMethod.Post,
             Content = new StringContent(content, Encoding.UTF8, "application/json"),
-            RequestUri = new Uri(client.BaseAddress + "shopping/" + "checkout")
+            RequestUri = new Uri(client.BaseAddress + "checkout")
         };
 
         // Act
